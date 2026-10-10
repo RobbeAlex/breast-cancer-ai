@@ -1,0 +1,13 @@
+# Virtual environments
+.venv/
+
+# Datasets
+Raw Data/
+
+# Model weights
+*.keras
+*.h5
+*.pth
+
+# Python cache
+__pycache__/
