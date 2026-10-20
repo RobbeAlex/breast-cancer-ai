@@ -5,10 +5,12 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, confusion_matrix
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 print("Iniciando evaluación del modelo de Cáncer de Mama...")
 
 try:
-    with open('mapeo_clases.json', 'r') as f:
+    with open(os.path.join(BASE_DIR, 'config', 'mapeo_clases.json'), 'r', encoding='utf-8') as f:
         mapeo_clases = json.load(f)
     print("Mapeo de clases cargado correctamente.")
 except FileNotFoundError:
@@ -16,13 +18,13 @@ except FileNotFoundError:
     exit()
 
 try:
-    model = tf.keras.models.load_model('modelo_breast_cancer.keras')
+    model = tf.keras.models.load_model(os.path.join(BASE_DIR, 'models', 'modelo_breast_cancer.keras'))
     print("Modelo cargado exitosamente.")
 except Exception as e:
     print(f"Error al cargar el modelo: {e}")
     exit()
 
-TEST_DIR = "Testing Data"
+TEST_DIR = os.path.join(BASE_DIR, "Testing Data")
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
 
@@ -75,6 +77,7 @@ plt.yticks(tick_marks, clases_names)
 plt.ylabel('Diagnóstico Real (Lo que es)')
 plt.xlabel('Diagnóstico de la IA (Lo que predijo)')
 plt.tight_layout()
-plt.savefig('matriz_confusion.png')
+os.makedirs(os.path.join(BASE_DIR, 'results'), exist_ok=True)
+plt.savefig(os.path.join(BASE_DIR, 'results', 'matriz_confusion.png'))
 
 print("¡Evaluación terminada! La matriz se ha guardado como 'matriz_confusion.png'.")

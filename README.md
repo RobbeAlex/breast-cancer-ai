@@ -41,13 +41,13 @@ Este proyecto implementa un pipeline completo de Machine Learning / Deep Learnin
 
 4.  **Flujo de Ejecución:**
     Puedes seguir el flujo lógico del proyecto ejecutando los scripts en este orden:
-    *   `python preparar_dataset.py` (Procesamiento de datos)
-    *   `python train_model.py` (Entrenamiento)
-    *   `python evaluate_model.py` (Validación y métricas)
+    *   `python scripts/preparar_dataset.py` (Procesamiento de datos)
+    *   `python src/train_model.py` (Entrenamiento)
+    *   `python src/evaluate_model.py` (Validación y métricas)
     *   `python app.py` (Servicio/Inferencia)
 
 ## 📂 Estructura Principal
 *   `app.py`: Aplicación principal de servicio.
 *   `train_model.py` / `evaluate_model.py`: Scripts de entrenamiento y evaluación.
-*   `modelo_breast_cancer.keras`: Modelo pre-entrenado y guardado.
-*   `matriz_confusion.png`: Resultados visuales de la evaluación del modelo.
+*   `models/modelo_breast_cancer.keras`: Modelo pre-entrenado y guardado.
+*   `results/matriz_confusion.png`: Resultados visuales de la evaluación del modelo.

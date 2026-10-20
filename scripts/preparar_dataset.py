@@ -6,10 +6,11 @@ import numpy as np
 import shutil
 from sklearn.model_selection import train_test_split
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 URL_MIAS = "http://peipa.essex.ac.uk/pix/mias/all-mias.tar.gz"
-RAW_DIR = os.path.join("Raw Data", "all-mias")
-TRAIN_DIR = "Training Data"
-TEST_DIR = "Testing Data"
+RAW_DIR = os.path.join(BASE_DIR, "Raw Data", "all-mias")
+TRAIN_DIR = os.path.join(BASE_DIR, "Training Data")
+TEST_DIR = os.path.join(BASE_DIR, "Testing Data")
 CLASSES = ["Normal", "Calcificaciones", "Masas"]
 PATCH_SIZE = 224
 

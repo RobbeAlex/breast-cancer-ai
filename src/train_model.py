@@ -10,9 +10,10 @@ from sklearn.utils.class_weight import compute_class_weight
 
 print("Configurando el entorno de entrenamiento...")
 
-# Configuración
-TRAIN_DIR = "Training Data"
-TEST_DIR = "Testing Data"
+# Configuración basada en la ruta del script
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TRAIN_DIR = os.path.join(BASE_DIR, "Training Data")
+TEST_DIR = os.path.join(BASE_DIR, "Testing Data")
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
 
@@ -45,7 +46,8 @@ print(f"Clases detectadas: {clases}")
 
 # Guardar mapeo de clases
 mapeo_clases = {str(i): clase for i, clase in enumerate(clases)}
-with open('mapeo_clases.json', 'w') as f:
+os.makedirs(os.path.join(BASE_DIR, 'config'), exist_ok=True)
+with open(os.path.join(BASE_DIR, 'config', 'mapeo_clases.json'), 'w') as f:
     json.dump(mapeo_clases, f)
 
 # Calcular pesos de clase para lidiar con el desbalance severo
@@ -91,9 +93,10 @@ model.compile(
     metrics=['accuracy', tf.keras.metrics.Recall(name='recall')]
 )
 
+os.makedirs(os.path.join(BASE_DIR, 'models'), exist_ok=True)
 callbacks = [
     EarlyStopping(monitor='val_recall', mode='max', patience=4, restore_best_weights=True, verbose=1),
-    ModelCheckpoint('modelo_breast_cancer.keras', save_best_only=True, monitor='val_recall', mode='max'),
+    ModelCheckpoint(os.path.join(BASE_DIR, 'models', 'modelo_breast_cancer.keras'), save_best_only=True, monitor='val_recall', mode='max'),
     ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=2, min_lr=1e-6)
 ]
 

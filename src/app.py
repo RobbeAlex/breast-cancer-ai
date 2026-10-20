@@ -1,9 +1,12 @@
+import os
 import streamlit as st
 import tensorflow as tf
 import numpy as np
 import json
 from PIL import Image
 import cv2
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 st.set_page_config(
     page_title="IA Cáncer de Mama",
@@ -26,7 +29,7 @@ st.write("Sube una mamografía. El sistema la dividirá en cuadrículas y buscar
 @st.cache_data
 def cargar_diccionario_clases():
     try:
-        with open('mapeo_clases.json', 'r') as f:
+        with open(os.path.join(BASE_DIR, 'config', 'mapeo_clases.json'), 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
         return None
@@ -34,7 +37,7 @@ def cargar_diccionario_clases():
 @st.cache_resource
 def cargar_modelo():
     try:
-        return tf.keras.models.load_model('modelo_breast_cancer.keras')
+        return tf.keras.models.load_model(os.path.join(BASE_DIR, 'models', 'modelo_breast_cancer.keras'))
     except Exception as e:
         return None
 
